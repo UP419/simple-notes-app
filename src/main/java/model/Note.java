@@ -16,8 +16,13 @@ public class Note {
     @Id
     private Long id;
 
-    private String userId;
+    private Long userId;
 
     private String content;
+
+    public Note(Long userId, String content){
+        this.userId = userId;
+        this.content = content;
+    }
 
 }

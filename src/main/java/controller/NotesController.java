@@ -2,13 +2,10 @@ package controller;
 
 import model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import service.NoteService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -18,24 +15,33 @@ public class NotesController {
     @Autowired
     private NoteService noteService;
 
-    @GetMapping("")
+    @GetMapping("/{userId}")
     public List<Note> getNotesByUserId(@PathVariable Long userId) {
-        return new ArrayList<>();
+        return noteService.getNotesByUserId(userId);
     }
 
-//    @PostMapping("")
-//    public ResponseEntity<String> addNoteToUser(@RequestBody String str) {
-//
-//    }
-//
-//    @PostMapping("")
-//    public ResponseEntity<String> updateNoteById(@PathVariable Long noteId) {
-//
-//    }
-//
-//    @DeleteMapping("")
-//    public ResponseEntity<String> deleteNoteById(@PathVariable Long noteId) {
-//
-//    }
+    @PostMapping("/add")
+    public ResponseEntity<String> addNoteToUser(@RequestBody AddNoteRequest addNoteRequest) {
+        noteService.addNoteToUser(addNoteRequest.userId(), addNoteRequest.content());
+        return ResponseEntity.ok("Note added successfully");
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateNoteById(@RequestBody UpdateNoteRequest updateNoteRequest) {
+        noteService.updateUserNote(updateNoteRequest.noteId(), updateNoteRequest.content());
+        return ResponseEntity.ok("Note updated successfully");
+    }
+
+    @DeleteMapping("/delete/{noteId}")
+    public ResponseEntity<String> deleteNoteById(@PathVariable Long noteId) {
+        noteService.deleteNoteById(noteId);
+        return ResponseEntity.ok("Note deleted successfully");
+    }
+
+    public record AddNoteRequest(Long userId, String content) {
+    }
+
+    public record UpdateNoteRequest(Long noteId, String content) {
+    }
 
 }

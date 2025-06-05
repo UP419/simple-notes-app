@@ -6,29 +6,37 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> handleBadCredential(BadCredentialsException exception){
+    public ResponseEntity<?> handleBadCredential(BadCredentialsException exception) {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(exception.getMessage());
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<?> handleUsernameNotFound(UsernameNotFoundException exception){
+    public ResponseEntity<?> handleUsernameNotFound(UsernameNotFoundException exception) {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(exception.getMessage());
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<?> handleIllegalState(IllegalStateException exception){
+    public ResponseEntity<?> handleIllegalState(IllegalStateException exception) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<?> handleResponseStatusException(ResponseStatusException exception) {
+        return ResponseEntity
+                .status(exception.getStatusCode())
+                .body(exception.getReason());
     }
 
 }
