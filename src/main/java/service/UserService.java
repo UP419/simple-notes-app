@@ -2,6 +2,8 @@ package service;
 
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 import utils.PasswordUtils;
@@ -22,5 +24,13 @@ public class UserService {
         User newUser = new User(userName, PasswordUtils.encryptPassword(password));
         userRepository.save(newUser);
         return newUser;
+    }
+
+    public User logIn(String userName, String password){
+        User user = userRepository.findByUserName(userName).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        if (!PasswordUtils.verifyPassword(password, user.getPassword())) {
+            throw new BadCredentialsException("Password is incorrect");
+        }
+        return user;
     }
 }
