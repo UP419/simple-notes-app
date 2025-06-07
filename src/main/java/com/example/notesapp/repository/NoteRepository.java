@@ -1,6 +1,6 @@
-package repository;
+package com.example.notesapp.repository;
 
-import model.Note;
+import com.example.notesapp.model.Note;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

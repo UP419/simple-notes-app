@@ -1,4 +1,4 @@
-package utils;
+package com.example.notesapp.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

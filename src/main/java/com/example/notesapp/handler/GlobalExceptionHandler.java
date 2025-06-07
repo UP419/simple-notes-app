@@ -1,4 +1,4 @@
-package handler;
+package com.example.notesapp.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

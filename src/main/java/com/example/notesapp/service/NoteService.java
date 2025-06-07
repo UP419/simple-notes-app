@@ -1,11 +1,11 @@
-package service;
+package com.example.notesapp.service;
 
-import model.Note;
+import com.example.notesapp.model.Note;
+import com.example.notesapp.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import repository.NoteRepository;
 
 import java.util.List;
 

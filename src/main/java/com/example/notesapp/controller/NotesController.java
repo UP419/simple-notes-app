@@ -1,10 +1,10 @@
-package controller;
+package com.example.notesapp.controller;
 
-import model.Note;
+import com.example.notesapp.model.Note;
+import com.example.notesapp.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import service.NoteService;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
-package service;
+package com.example.notesapp.service;
 
-import model.User;
+import com.example.notesapp.utils.PasswordUtils;
+import com.example.notesapp.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import repository.UserRepository;
-import utils.PasswordUtils;
+import com.example.notesapp.repository.UserRepository;
 
 import java.util.Optional;
 

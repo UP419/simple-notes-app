@@ -1,17 +1,16 @@
-package model;
+package com.example.notesapp.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Entity
-@Table(name = "notes")
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "notes")
 public class Note {
     @Id
     private Long id;
