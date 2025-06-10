@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -17,14 +18,14 @@ public class NotesController {
     private NoteService noteService;
 
     @GetMapping("/{userId}")
-    public List<Note> getNotesByUserId(@PathVariable Long userId) {
+    public List<Note> getNotesByUserId(@PathVariable UUID userId) {
         return noteService.getNotesByUserId(userId);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addNoteToUser(@RequestBody AddNoteRequest addNoteRequest) {
-        noteService.addNoteToUser(addNoteRequest.userId(), addNoteRequest.content());
-        return ResponseEntity.ok("Note added successfully");
+    public ResponseEntity<Note> addNoteToUser(@RequestBody AddNoteRequest addNoteRequest) {
+        Note note = noteService.addNoteToUser(addNoteRequest.userId(), addNoteRequest.content());
+        return ResponseEntity.ok(note);
     }
 
     @PutMapping("/update")
@@ -34,15 +35,15 @@ public class NotesController {
     }
 
     @DeleteMapping("/delete/{noteId}")
-    public ResponseEntity<String> deleteNoteById(@PathVariable Long noteId) {
+    public ResponseEntity<String> deleteNoteById(@PathVariable UUID noteId) {
         noteService.deleteNoteById(noteId);
         return ResponseEntity.ok("Note deleted successfully");
     }
 
-    public record AddNoteRequest(Long userId, String content) {
+    public record AddNoteRequest(UUID userId, String content) {
     }
 
-    public record UpdateNoteRequest(Long noteId, String content) {
+    public record UpdateNoteRequest(UUID noteId, String content) {
     }
 
 }

@@ -1,11 +1,12 @@
 package com.example.notesapp.controller;
 
-import com.example.notesapp.model.User;
+import com.example.notesapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.notesapp.service.UserService;
+
+import java.util.UUID;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -16,13 +17,15 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> singUp(@RequestBody AuthRequest authRequest) {
-        return new ResponseEntity<>(userService.signUp(authRequest.userName, authRequest.password), HttpStatus.CREATED);
+    public ResponseEntity<UUID> singUp(@RequestBody AuthRequest authRequest) {
+        UUID userId = userService.signUp(authRequest.userName, authRequest.password).getId();
+        return new ResponseEntity<>(userId, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> logIn(@RequestBody AuthRequest authRequest) {
-        return new ResponseEntity<>(userService.logIn(authRequest.userName, authRequest.password), HttpStatus.OK);
+    public ResponseEntity<UUID> logIn(@RequestBody AuthRequest authRequest) {
+        UUID userId = userService.logIn(authRequest.userName, authRequest.password).getId();
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
     public record AuthRequest(String userName, String password){}

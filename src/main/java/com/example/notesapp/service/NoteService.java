@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class NoteService {
@@ -15,22 +16,23 @@ public class NoteService {
     @Autowired
     private NoteRepository noteRepository;
 
-    public List<Note> getNotesByUserId(Long userId) {
+    public List<Note> getNotesByUserId(UUID userId) {
         return noteRepository.findByUserId(userId);
     }
 
-    public void addNoteToUser(Long userId, String content) {
+    public Note addNoteToUser(UUID userId, String content) {
         Note note = new Note(userId, content);
         noteRepository.save(note);
+        return note;
     }
 
-    public void updateUserNote(Long noteId, String content) {
+    public void updateUserNote(UUID noteId, String content) {
         Note note = noteRepository.findById(noteId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note with id " + noteId + " not found"));
         note.setContent(content);
         noteRepository.save(note);
     }
 
-    public void deleteNoteById(Long noteId) {
+    public void deleteNoteById(UUID noteId) {
         Note note = noteRepository.findById(noteId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Note with id " + noteId + " not found"));
         noteRepository.delete(note);
     }

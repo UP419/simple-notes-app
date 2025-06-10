@@ -33,7 +33,7 @@ export async function addNote(userId, content) {
         body: JSON.stringify({ userId, content }),
     });
     if (!response.ok) throw new Error('Failed to add note');
-    return response.text();
+    return response.json();
 }
 
 export async function updateNote(noteId, content) {

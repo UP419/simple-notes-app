@@ -32,7 +32,9 @@ const Notes = () => {
 
     const handleAddNote = async () => {
         if (!newNote.trim()) return;
-        await addNote(userId, newNote);
+        const addedNote = await addNote(userId, newNote);
+        console.log("added note is ", addedNote);
+        setNotes((prevNotes) => [...prevNotes, addedNote]);
         setNewNote('');
     };
 

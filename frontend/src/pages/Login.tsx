@@ -13,7 +13,7 @@ const Login = () => {
     const handleLogin = async () => {
         try {
             const res = await login(userName, password);
-            localStorage.setItem('userId', res.id);
+            localStorage.setItem('userId', res);
             navigate('/notes');
         } catch {
             alert('Login failed');

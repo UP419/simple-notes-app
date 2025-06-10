@@ -15,7 +15,7 @@ const Register = () => {
         }
         try {
             const res = await signup(userName, password);
-            localStorage.setItem('userId', res.data.id);
+            localStorage.setItem('userId', res);
             navigate('/notes');
         } catch {
             alert('Signup failed');
@@ -42,7 +42,7 @@ const Register = () => {
             <input
                 type="password"
                 placeholder="Repeat Password"
-                value={password}
+                value={repeatedPassword}
                 onChange={(e) => setRepeatedPassword(e.target.value)}
                 className="input"
             />
