@@ -1,12 +1,12 @@
 package com.example.notesapp.handler;
 
+import com.example.notesapp.exception.NoteNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -32,11 +32,11 @@ public class GlobalExceptionHandler {
                 .body(exception.getMessage());
     }
 
-    @ExceptionHandler(ResponseStatusException.class)
-    public ResponseEntity<?> handleResponseStatusException(ResponseStatusException exception) {
+    @ExceptionHandler(NoteNotFoundException.class)
+    public ResponseEntity<?> handleNoteNotFoundException(NoteNotFoundException exception) {
         return ResponseEntity
-                .status(exception.getStatusCode())
-                .body(exception.getReason());
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 
 }
