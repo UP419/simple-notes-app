@@ -26,7 +26,7 @@ public class UserService {
         return newUser;
     }
 
-    public User logIn(String userName, String password){
+    public User logIn(String userName, String password) {
         User user = userRepository.findByUserName(userName).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         if (!PasswordUtils.verifyPassword(password, user.getPassword())) {
             throw new BadCredentialsException("Password is incorrect");

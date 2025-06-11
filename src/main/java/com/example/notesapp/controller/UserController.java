@@ -27,6 +27,7 @@ public class UserController {
         return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
-    public record AuthRequest(String userName, String password){}
+    public record AuthRequest(String userName, String password) {
+    }
 
 }

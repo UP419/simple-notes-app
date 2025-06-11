@@ -20,7 +20,7 @@ public class Note {
 
     private String content;
 
-    public Note(UUID userId, String content){
+    public Note(UUID userId, String content) {
         this.userId = userId;
         this.content = content;
     }
