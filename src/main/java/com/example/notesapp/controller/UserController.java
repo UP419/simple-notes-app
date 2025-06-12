@@ -1,6 +1,8 @@
 package com.example.notesapp.controller;
 
 import com.example.notesapp.service.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +18,22 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<UUID> singUp(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<UUID> singUp(@RequestBody @Valid AuthRequest authRequest) {
         UUID userId = userService.signUp(authRequest.userName, authRequest.password).getId();
         return new ResponseEntity<>(userId, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UUID> logIn(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<UUID> logIn(@RequestBody @Valid AuthRequest authRequest) {
         UUID userId = userService.logIn(authRequest.userName, authRequest.password).getId();
         return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
-    public record AuthRequest(String userName, String password) {
+    public record AuthRequest(
+            @NotBlank(message = "Username must not be blank") String userName,
+            @NotBlank(message = "Password must not be blank") String password
+    ) {
+
     }
 
 }

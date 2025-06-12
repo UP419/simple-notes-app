@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { addNote, deleteNote, getNotes, updateNote } from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {addNote, deleteNote, getNotes, updateNote} from '../services/api';
+import {useNavigate} from 'react-router-dom';
 import '../App.css';
 
 
@@ -52,7 +52,7 @@ const Notes = () => {
             await updateNote(editingNoteId, editedContent);
             setNotes((prevNotes) =>
                 prevNotes.map((note) =>
-                    note.id === editingNoteId ? { ...note, content: editedContent } : note
+                    note.id === editingNoteId ? {...note, content: editedContent} : note
                 )
             );
             setEditingNoteId(null);
@@ -70,17 +70,17 @@ const Notes = () => {
         <div className='container'>
             <h2>Your Notes</h2>
 
-            <div style={{ display: 'flex', gap: 10 }}>
+            <div style={{display: 'flex', gap: 10}}>
                 <input
                     value={newNote}
                     onChange={(e) => setNewNote(e.target.value)}
                     placeholder="Add a note"
-                    style={{ flex: 1, padding: 8 }}
+                    style={{flex: 1, padding: 8}}
                 />
-                <button onClick={handleAddNote} style={{ padding: 8 }}>Add</button>
+                <button onClick={handleAddNote} style={{padding: 8}}>Add</button>
             </div>
 
-            <ul style={{ marginTop: 20, listStyle: 'none', padding: 0 }}>
+            <ul style={{marginTop: 20, listStyle: 'none', padding: 0}}>
                 {notes.map((note) => (
                     <li
                         key={note.id}
@@ -100,14 +100,14 @@ const Notes = () => {
                                 <input
                                     value={editedContent}
                                     onChange={(e) => setEditedContent(e.target.value)}
-                                    style={{ flex: 1, padding: 6 }}
+                                    style={{flex: 1, padding: 6}}
                                 />
                                 <button onClick={handleSaveEdit}>Save</button>
                                 <button onClick={handleCancelEdit}>Cancel</button>
                             </>
                         ) : (
                             <>
-                                <span style={{ flex: 1 }}>{note.content}</span>
+                                <span style={{flex: 1}}>{note.content}</span>
                                 <button onClick={() => handleStartEdit(note)}>Update</button>
                                 <button onClick={() => handleDeleteNote(note.id)}>Delete</button>
                             </>

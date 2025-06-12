@@ -3,20 +3,26 @@ const API_BASE = 'http://localhost:8080/api/v1';
 export async function login(userName, password) {
     const response = await fetch(`${API_BASE}/user/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userName, password }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({userName, password}),
     });
-    if (!response.ok) throw new Error('Login failed');
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Login Failed');
+    }
     return response.json();
 }
 
 export async function signup(userName, password) {
     const response = await fetch(`${API_BASE}/user/signup`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userName, password }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({userName, password}),
     });
-    if (!response.ok) throw new Error('Signup failed');
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Signup Failed');
+    }
     return response.json();
 }
 
@@ -29,8 +35,8 @@ export async function getNotes(userId) {
 export async function addNote(userId, content) {
     const response = await fetch(`${API_BASE}/note/add`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, content }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({userId, content}),
     });
     if (!response.ok) throw new Error('Failed to add note');
     return response.json();
@@ -39,8 +45,8 @@ export async function addNote(userId, content) {
 export async function updateNote(noteId, content) {
     const response = await fetch(`${API_BASE}/note/update`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ noteId, content }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({noteId, content}),
     });
     if (!response.ok) throw new Error('Failed to update note');
     return response.text();

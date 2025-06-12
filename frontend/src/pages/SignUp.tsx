@@ -1,24 +1,31 @@
-import { useState } from 'react';
-import { signup } from '../services/api';
-import { useNavigate } from 'react-router-dom';
+import {useState} from 'react';
+import {signup} from '../services/api';
+import {useNavigate} from 'react-router-dom';
 import '../App.css';
 
 const Register = () => {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [repeatedPassword, setRepeatedPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSignup = async () => {
-        if(password !== repeatedPassword){
-            alert("password do not match");
+        if (password !== repeatedPassword) {
+            setError("Passwords do not match")
+            return;
         }
+        if (!userName.trim() || !password.trim()) {
+            setError("Username and password cannot be empty")
+            return;
+        }
+        setError('');
         try {
-            const res = await signup(userName, password);
+            const res = await signup(userName.trim(), password.trim());
             localStorage.setItem('userId', res);
             navigate('/notes');
-        } catch {
-            alert('Signup failed');
+        } catch (err) {
+            setError(err.message || "Signup Failed")
         }
     };
 
@@ -49,6 +56,7 @@ const Register = () => {
             <button onClick={handleSignup} className="button">
                 Sign Up
             </button>
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 };
